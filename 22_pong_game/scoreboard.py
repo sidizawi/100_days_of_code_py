@@ -19,12 +19,15 @@ class ScoreBoard(Turtle):
 		self.update_score()
 		self.hideturtle()
 
+	def get_score(self):
+		return (self.score)
+
 	def update_score(self):
 		self.write(f"{self.score}", align=ALIGNEMENT, font=FONT)
 
-	def game_over(self):
+	def game_over(self, side):
 		self.goto(0, 0)
-		self.write("Game Over.", align=ALIGNEMENT, font=FONT)
+		self.write(f"Game Over, {side} player win!", align=ALIGNEMENT, font=FONT)
 
 	def write_score(self):
 		self.score += 1

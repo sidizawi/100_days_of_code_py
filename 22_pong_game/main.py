@@ -37,12 +37,12 @@ while game_on:
 	time.sleep(.1)
 	game_ball.move()
 
-	#collision with wall
+	# collision with wall
 	if game_ball.ycor() >= 280 or game_ball.ycor() <= -280:
 		ball_heading = game_ball.heading()
 		game_ball.setheading(-ball_heading)
 	
-	#bounce on paddle
+	# bounce on paddle
 	if left_paddle.distance(game_ball) <= 30 or right_paddle.distance(game_ball) <= 30:
 		ball_heading = game_ball.heading()
 		game_ball.setheading(180 - ball_heading)
@@ -54,5 +54,16 @@ while game_on:
 	elif game_ball.xcor() < -400:
 		game_ball.reset()
 		right_score.write_score()
+
+	# check score
+	score = left_score.get_score()
+	if (score > 10):
+		game_on = False
+		left_score.game_over("Left")
+
+	score = right_score.get_score()
+	if (score > 10):
+		game_on = False
+		right_score.game_over("Right")
 
 screen.exitonclick()
