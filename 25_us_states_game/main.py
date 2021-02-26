@@ -29,10 +29,7 @@ while game_on and loop < 50:
 
 	if not answer:
 		game_on = False
-		missing = []
-		for state in states.state:
-			if state not in guessed:
-				missing.append(state)
+		missing = [state for state in states.state if state not in guessed]
 		df = pd.DataFrame({"missing states" : missing})
 		df.to_csv("state_to_learn.csv")
 	elif answer_in_data(answer):
