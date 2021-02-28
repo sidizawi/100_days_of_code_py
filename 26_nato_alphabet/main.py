@@ -3,7 +3,14 @@ import pandas as pd
 data = pd.read_csv("nato_phonetic_alphabet.csv")
 letters_dict = {row.letter:row.code for (index, row) in data.iterrows()}
 
-user_input = input("Enter a word: ")
-result = [letters_dict[letter.upper()] for letter in user_input]
+def generate_phonetic():
+	word = input("Enter a word: ")
+	try:
+		result = [letters_dict[letter.upper()] for letter in word]
+	except:
+		print("Sorry, only letters in the alphabet please")
+		generate_phonetic()
+	else:
+		print(result)
 
-print(result)
+generate_phonetic()

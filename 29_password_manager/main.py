@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
 import pyperclip as pyp
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -23,27 +24,64 @@ def generate_passwd():
 	pyp.copy(pass_entry.get())
 
 
+# ------------------------------ SEARCH ------------------------------------ #
+
+def find_password(data, website):
+	try:
+		info = data[website]
+	except KeyError:
+		messagebox.showinfo(title="Error",
+			message="No details for the website exists")
+	else:
+		email = info['email']
+		passwd = info['password']
+		messagebox.showinfo(title=website,
+			message=f"Email: {email}\nPassword: {passwd}")
+		pyp.copy(passwd)
+
+def search():
+	website = website_entry.get()
+	try:
+		with open("data.json", 'r') as f:
+			data = json.load(f)
+	except FileNotFoundError:
+		messagebox.showinfo(title="Error",
+			message="No Data File Found")
+	else:
+		find_password(data, website)
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
+def write_file(data):
+	with open("data.json", 'w') as f:
+		json.dump(data, f, indent=4)
 
 def save():
 	website = website_entry.get()
 	email = user_entry.get()
 	passwd = pass_entry.get()
+	new_data = {
+		website: {
+			"email": email,
+			"password": passwd,
+		}
+	}
 
-	is_ok = 0
-	if website and email and passwd:
-		is_ok = messagebox.askokcancel(title=website,
-			message=f"These are the details entered:"
-			f"\nEmail: {email} \nPassword: {passwd} \nIs it ok to save?")
-	else:
+	if not website or not email or not passwd:
 		messagebox.showinfo(title="Oops",
 			message="Please don't leave any fields empty")
-
-	if is_ok:
-		with open("data.txt", 'a') as f:
-			f.write(f"{website} | {email} | {passwd}\n")
-		pass_entry.delete(0, END)
-		website_entry.delete(0, END)
+	else:
+		try:
+			with open("data.json", 'r') as f:
+				data = json.load(f)
+		except:
+			write_file(new_data)
+		else:
+			data.update(new_data)
+			write_file(data)
+		finally:
+			pass_entry.delete(0, END)
+			website_entry.delete(0, END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -60,10 +98,13 @@ canvas.grid(row=0, column=1)
 website_label = Label(text="Website:")
 website_label.grid(row=1, column=0)
 
-website_entry = Entry(width=35)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry(width=17)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
-# columnspan to extend to 2 columns
+
+search_button = Button(text="Search", width=15,
+	command=search)
+search_button.grid(row=1, column=2)
 
 user_label = Label(text="Email/Username:")
 user_label.grid(row=2, column=0)
@@ -84,6 +125,6 @@ generate_button.grid(row=3, column=2)
 
 add_button = Button(text="Add", width=36, command=save)
 add_button.grid(row=4, column=1, columnspan=2)
-
+# columnspan to extend to 2 columns
 
 window.mainloop()
