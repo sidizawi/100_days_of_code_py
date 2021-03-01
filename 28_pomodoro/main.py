@@ -6,14 +6,14 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = .1
+WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
 check_rep = 0
 timer = None
 
-# ---------------------------- TIMER RESET ------------------------------- # 
+# ---------------------------- TIMER RESET ------------------------------- #
 
 def reset():
 	global reps
@@ -27,7 +27,7 @@ def reset():
 		check_label.config(text="")
 
 
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
+# ---------------------------- TIMER MECHANISM ------------------------------- #
 
 def start():
 	global reps
@@ -42,12 +42,12 @@ def start():
 		title_label.config(text="Work", fg=GREEN)
 		count_down(WORK_MIN * 60)
 
-# ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
+# ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 
 def count_down(count):
 	global check_rep
 	global timer
-	count_min = math.floor(count / 60) 
+	count_min = math.floor(count / 60)
 	count_sec = round(count % 60)
 	if count_sec < 10:
 		count_sec = f"0{count_sec}"

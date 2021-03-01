@@ -10,11 +10,11 @@ def generate_passwd():
 	letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 	numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 	symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
-	
+
 	passwd = [choice(letters) for _ in range(randint(8, 10))]
 	[passwd.append(choice(symbols)) for _ in range(randint(2, 4))]
 	[passwd.append(choice(numbers)) for _ in range(randint(2, 4))]
-	
+
 	shuffle(passwd)
 
 	res = "".join(passwd)
@@ -109,7 +109,7 @@ search_button.grid(row=1, column=2)
 user_label = Label(text="Email/Username:")
 user_label.grid(row=2, column=0)
 
-user_entry = Entry(width=35)
+user_entry = Entry(width=36)
 user_entry.grid(row=2, column=1, columnspan=2)
 user_entry.insert(0, "sidi@gmail.com")
 
@@ -123,7 +123,7 @@ generate_button = Button(text="Generate Password",
 	command=generate_passwd)
 generate_button.grid(row=3, column=2)
 
-add_button = Button(text="Add", width=36, command=save)
+add_button = Button(text="Add", width=34, command=save)
 add_button.grid(row=4, column=1, columnspan=2)
 # columnspan to extend to 2 columns
 
