@@ -38,9 +38,9 @@ time_now = datetime.now()
 message = f"Subject: Station Spatiale Internationale\n\n\
 \
 Look above you\n"
-my_email = "python.tester007@gmail.com"
-my_pass = "Q1999ma@1999"
-to_email = "z.sidi99m@gmail.com"
+my_email = "..."
+my_pass = "..."
+to_email = "..."
 
 def send_mail():
 	with smtplib.SMTP("smtp.gmail.com") as connection:
@@ -72,6 +72,3 @@ while cont:
 		send_mail()
 		cont = 0
 	time.sleep(60)
-
-
-
